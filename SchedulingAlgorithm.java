@@ -11,34 +11,65 @@ public class Assignment2 {
         File file = new File("times.txt");
         Scanner scanner = new Scanner(file);
 
-        List<double[]> class_times = new ArrayList<double[]>();
+        LinkedList<Class_Time> class_times = new LinkedList<Class_Time>();
 
         while (scanner.hasNext()) {
             String class_t = scanner.next();
 
-
             String[] class_ti = class_t.split(",");
             double d1 = Double.parseDouble(class_ti[0].substring(1,class_ti[0].length()));
             double d2 = Double.parseDouble(class_ti[1].substring(0,class_ti[1].length()-1));
-            double[] pair = {d1, d2};
 
-            System.out.print(d1);
-            System.out.print(d2);
-            System.out.println();
+            Class_Time c = new Class_Time(d1,d2);
 
-            class_times.add(pair);
-
+            class_times.add(c);
         }
 
-        //for (String[] s : class_times) {
-        //    System.out.println(s);
-            //System.out.println(s[0]);
-            //System.out.println(s[1]);
+        Collections.sort(class_times);
 
-            //System.out.print(s.charAt(1));
-            //System.out.println(s.charAt(3));
-        //}
+/*
+        // Prints out the sorted section times
+        for (Class_Time ct : class_times) {
+            System.out.println(ct.getX() + " ," + ct.getY());
+        }
+*/
 
+        // Loops through the list of times
+        // Adds section times to a class room based on compatability
+        // Loops until all sections have been added to a classroom
+
+        LinkedList<Class_Time> remaining_sections = class_times;
+        LinkedList<Room> class_rooms = new LinkedList<Room>();
+
+        System.out.println("length of sections"  + remaining_sections.size());
+
+        while (remaining_sections.size() > 0) {
+            Room r = new Room();
+            Class_Time prev_section = remaining_sections.removeFirst();
+            r.addSection(prev_section);
+            int len = remaining_sections.size();
+            for (int i = 1; i < len-1; i++) {
+                if (remaining_sections.get(i).getX() >= prev_section.getY()) {
+                    Class_Time curr_section = remaining_sections.get(i);
+                    r.addSection(curr_section);
+                    prev_section = curr_section;
+                    remaining_sections.remove(i);
+                }
+            }
+            class_rooms.add(r);
+        }
+
+
+        // Prints out the Class Rooms with the sections that can be taught
+        int count = 1;
+        for (Room rr : class_rooms) {
+            List<Class_Time> cts  = rr.getSections();
+            System.out.println("Class " + count);
+            for (Class_Time ctt : cts) {
+                ctt.dis();
+            }
+            count++;
+        }
 
     }
 }
