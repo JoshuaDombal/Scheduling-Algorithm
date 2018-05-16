@@ -1,8 +1,9 @@
 // Josh Dombal
 // This algorithm takes section times from a text file as input
 // It schedules these sections in the minimum number of classrooms and
-//    then displays each section in the appropriate class room 
-
+//    then displays each section in the appropriate class room
+// Created May, 2018
+// Last Modified May 16, 2018
 
 import java.util.*;
 import java.io.*;
