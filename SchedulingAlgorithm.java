@@ -4,7 +4,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Assignment2 {
+public class SchedulingAlgorithm {
 
 
     public static void main(String[] args) throws Exception {
